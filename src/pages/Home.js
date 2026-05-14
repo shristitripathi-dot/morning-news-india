@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SubscribePopup from '../components/SubscribePopup';
 
-const GNEWS_API_KEY = '2a60ebeb450229095f77a23e41949cb5';
+const GNEWS_API_KEY = process.env.REACT_APP_GNEWS_KEY || '2a60ebeb450229095f77a23e41949cb5';
 
 const CATEGORIES = [
   { id: 'world', label: 'World', icon: '🌍', query: 'world news' },
