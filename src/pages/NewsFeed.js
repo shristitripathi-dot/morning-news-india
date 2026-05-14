@@ -12,7 +12,8 @@ function NewsFeed() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('');
 
-  useEffect(() => {
+// eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
     if (!selectedCategories) {
       navigate('/');
       return;
