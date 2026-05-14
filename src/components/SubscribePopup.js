@@ -8,30 +8,32 @@ function SubscribePopup({ selectedCategories, selectedState, onClose }) {
   var [loading, setLoading] = useState(false);
 
   function handleSubscribe() {
-    if (!email || !email.includes('@')) {
-      alert('Please enter a valid email!');
-      return;
-    }
-    setLoading(true);
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        categories: selectedCategories,
-        state: selectedState,
-      }),
-    })
-      .then(function() {
-        setSubscribed(true);
-        setLoading(false);
-      })
-      .catch(function() {
-        setSubscribed(true);
-        setLoading(false);
-      });
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email!');
+    return;
   }
+  setLoading(true);
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email,
+      categories: selectedCategories,
+      state: selectedState,
+      subscribedAt: new Date().toISOString(),
+    }),
+  })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Webhook failed');
+      setSubscribed(true);
+      setLoading(false);
+    })
+    .catch(function(err) {
+      console.error('Subscribe error:', err);
+      alert('Subscription failed. Please try again!');
+      setLoading(false);
+    });
+}
 
   return (
     <div style={styles.overlay}>
