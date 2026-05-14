@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SubscribePopup from '../components/SubscribePopup';
 
-const GNEWS_API_KEY = process.env.REACT_APP_GNEWS_KEY || '2a60ebeb450229095f77a23e41949cb5';
-
+const GNEWS_API_KEY = 'rYcelE2Q36ecGAm_q8vHCJY1WLVcHfuaBtF38CL1RpC9NBot';
 const CATEGORIES = [
   { id: 'world', label: 'World', icon: '🌍', query: 'world news' },
   { id: 'india', label: 'India', icon: '🇮🇳', query: 'India news' },
@@ -38,14 +37,14 @@ function Home() {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  function handleCategoryClick(cat) {
+ function handleCategoryClick(cat) {
     setActiveCategory(cat.id);
     setNews([]);
     setLoading(true);
-    fetch('https://gnews.io/api/v4/search?q=' + encodeURIComponent(cat.query) + '&lang=en&country=in&max=9&apikey=' + GNEWS_API_KEY)
+    fetch('https://api.currentsapi.services/v1/search?keywords=' + encodeURIComponent(cat.query) + '&language=en&apiKey=' + GNEWS_API_KEY)
       .then(function(res) { return res.json(); })
       .then(function(data) {
-        setNews(data.articles || []);
+        setNews(data.news || []);
         setLoading(false);
       })
       .catch(function() {
